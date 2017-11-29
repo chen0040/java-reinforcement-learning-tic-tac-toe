@@ -2,20 +2,18 @@ package com.github.chen0040.jrl.ttt.dojos;
 
 import com.github.chen0040.jrl.ttt.Board;
 import com.github.chen0040.jrl.ttt.bots.NaiveBot;
-import com.github.chen0040.jrl.ttt.bots.QBot;
-import com.github.chen0040.jrl.ttt.bots.SarsaBot;
-import com.github.chen0040.rl.learning.qlearn.QLearner;
-import com.github.chen0040.rl.learning.sarsa.SarsaLearner;
+import com.github.chen0040.jrl.ttt.bots.RBot;
+import com.github.chen0040.rl.learning.rlearn.RLearner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DojoSarsa {
+public class DojoR {
 
-    private static final Logger logger = LoggerFactory.getLogger(DojoSarsa.class);
+    private static final Logger logger = LoggerFactory.getLogger(DojoR.class);
 
-    public static double test(Board board, SarsaLearner model, int episodes) {
+    public static double test(Board board, RLearner model, int episodes) {
 
-        SarsaBot bot1 = new SarsaBot(1, board, model);
+        RBot bot1 = new RBot(1, board, model);
         NaiveBot bot2 =new NaiveBot(2, board);
 
         int wins = 0;
@@ -40,17 +38,17 @@ public class DojoSarsa {
 
     }
 
-    public static SarsaLearner train(Board board, int episodes) {
+    public static RLearner train(Board board, int episodes) {
 
 
         int stateCount = (int)Math.pow(3, board.size() * board.size());
         int actionCount = board.size() * board.size();
 
-        SarsaLearner learner = new SarsaLearner(stateCount, actionCount);
+        RLearner learner = new RLearner(stateCount, actionCount);
         //learner.setActionSelection(SoftMaxActionSelectionStrategy.class.getCanonicalName());
 
-        SarsaBot bot1 = new SarsaBot(1, board, learner);
-        SarsaBot bot2 =new SarsaBot(2, board, learner);
+        RBot bot1 = new RBot(1, board, learner);
+        RBot bot2 =new RBot(2, board, learner);
 
         for(int i=0; i < episodes; ++i) {
             bot1.clearHistory();
@@ -74,11 +72,11 @@ public class DojoSarsa {
     public static void main(String[] args) {
 
         Board board = new Board();
-        SarsaLearner model = train(board, 30000);
+        RLearner model = train(board, 30000);
 
 
-        double cap = test(board, model, 100);
-        logger.info("SARSA Bot beats Random Bot in {} % of the games", cap * 100);
+        double cap = test(board, model, 1000);
+        logger.info("R-Learn Bot beats Random Bot in {} % of the games", cap * 100);
     }
 
 }

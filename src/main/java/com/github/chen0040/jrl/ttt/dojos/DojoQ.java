@@ -76,7 +76,7 @@ public class DojoQ {
 
 
         double cap = test(board, model, 1000);
-        logger.info("Q-Learn Bot beats Random Bot in {} % of the games that have a winner", cap * 100);
+        logger.info("Q-Learn Bot beats Random Bot in {} % of the games", cap * 100);
     }
 
 }

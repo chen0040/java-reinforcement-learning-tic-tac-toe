@@ -95,8 +95,8 @@ public static QLearner train(Board board, int episodes) {
     SarsaLearner learner = new SarsaLearner(stateCount, actionCount);
     //learner.setActionSelection(SoftMaxActionSelectionStrategy.class.getCanonicalName());
 
-    SarsaBot bot1 = new QBot(1, board, learner);
-    SarsaBot bot2 =new QBot(2, board, learner);
+    SarsaBot bot1 = new SarsaBot(1, board, learner);
+    SarsaBot bot2 =new SarsaBot(2, board, learner);
 
     for(int i=0; i < episodes; ++i) {
         bot1.clearHistory();
@@ -158,5 +158,5 @@ double successRate = test(board, model, 1000);
 logger.info("SARSA Bot beats Random Bot in {} % of the games being played", successRate * 100);
 ```
 
-This sample code can be found in the DojoQ.java file in the project.
+This sample code can be found in the DojoSarsa.java file in the project.
 
