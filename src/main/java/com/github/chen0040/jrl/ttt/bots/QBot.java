@@ -1,62 +1,24 @@
-package com.github.chen0040.jrl.ttt;
+package com.github.chen0040.jrl.ttt.bots;
 
-import com.github.chen0040.rl.actionselection.SoftMaxActionSelectionStrategy;
-import com.github.chen0040.rl.learning.qlearn.QAgent;
+import com.github.chen0040.jrl.ttt.Board;
+import com.github.chen0040.jrl.ttt.Move;
+import com.github.chen0040.jrl.ttt.Position;
 import com.github.chen0040.rl.learning.qlearn.QLearner;
 import com.github.chen0040.rl.utils.IndexValue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-public class Bot {
-    private final int color;
-    private final Board board;
+public class QBot extends Bot {
     private final QLearner agent;
-    private int stateCount;
-    private int actionCount;
-    private List<Move> moves = new ArrayList<>();
-    private static Random random = new Random(42);
 
-    private double[] REWARD = new double[3];
-
-    public Bot(int color, Board board, QLearner learner) {
+    public QBot(int color, Board board, QLearner learner) {
+        super(color, board);
         this.agent = learner;
-
-        this.color = color;
-        this.board = board;
-
-        REWARD[0] = -3;
-        REWARD[1] = 100;
-        REWARD[2] = -100;
     }
 
-
-
-    private int getStrategyColor(int boardColor){
-        if(boardColor == color) return 1;
-        else if(boardColor == 0) return 0;
-        else return 2;
-    }
-
-    public int getState() {
-        int state = 0;
-        for(int i=0; i < board.size(); ++i) {
-            for(int j=0; j < board.size(); ++j) {
-                int strategyColor = getStrategyColor(board.getCell(i, j));
-                state = state * 3 + strategyColor;
-            }
-        }
-        return state;
-    }
-
-    public Set<Integer> getPossibleActions() {
-        List<Position> actions = board.getPossibleActions();
-        return actions.stream().map(pos -> pos.toInteger(board)).collect(Collectors.toSet());
-    }
-
+    @Override
     public void act() {
         int state = getState();
 
@@ -83,6 +45,7 @@ public class Bot {
         }
     }
 
+    @Override
     public void updateStrategy() {
 
         int winner = board.getWinner();
