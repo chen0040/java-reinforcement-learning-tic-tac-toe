@@ -54,7 +54,7 @@ public class SarsaBot extends Bot {
 
         double reward = REWARD[strategyColor];
 
-        for(int i=moves.size()-1; i >0; --i){
+        for(int i=moves.size()-1; i >= 0; --i){
             Move next_move = moves.get(i);
             if(i != moves.size()-1) {
                 next_move = moves.get(i+1);
