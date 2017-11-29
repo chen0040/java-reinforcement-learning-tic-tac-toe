@@ -1,14 +1,15 @@
-package com.github.chen0040.jrl.ttt;
+package com.github.chen0040.jrl.ttt.dojos;
 
+import com.github.chen0040.jrl.ttt.Board;
 import com.github.chen0040.jrl.ttt.bots.NaiveBot;
 import com.github.chen0040.jrl.ttt.bots.QBot;
 import com.github.chen0040.rl.learning.qlearn.QLearner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Dojo {
+public class DojoQ {
 
-    private static final Logger logger = LoggerFactory.getLogger(Dojo.class);
+    private static final Logger logger = LoggerFactory.getLogger(DojoQ.class);
 
     public static double test(Board board, QLearner model, int episodes) {
 

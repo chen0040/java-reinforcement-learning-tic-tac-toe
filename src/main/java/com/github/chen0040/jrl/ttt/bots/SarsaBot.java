@@ -4,16 +4,17 @@ import com.github.chen0040.jrl.ttt.Board;
 import com.github.chen0040.jrl.ttt.Move;
 import com.github.chen0040.jrl.ttt.Position;
 import com.github.chen0040.rl.learning.qlearn.QLearner;
+import com.github.chen0040.rl.learning.sarsa.SarsaLearner;
 import com.github.chen0040.rl.utils.IndexValue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class QBot extends Bot {
-    private final QLearner agent;
+public class SarsaBot extends Bot {
+    private final SarsaLearner agent;
 
-    public QBot(int color, Board board, QLearner learner) {
+    public SarsaBot(int color, Board board, SarsaLearner learner) {
         super(color, board);
         this.agent = learner;
     }
@@ -53,12 +54,16 @@ public class QBot extends Bot {
 
         double reward = REWARD[strategyColor];
 
-        for(int i=moves.size()-1; i >=0; --i){
-            Move move = moves.get(i);
-            if(i >= moves.size()-2) {
-                move.reward = reward;
+        for(int i=moves.size()-1; i >0; --i){
+            Move next_move = moves.get(i);
+            if(i != moves.size()-1) {
+                next_move = moves.get(i+1);
             }
-            agent.update(move.oldState, move.action, move.newState, move.reward);
+            Move current_move = moves.get(i);
+            if(i >= moves.size()-2) {
+                current_move.reward = reward;
+            }
+            agent.update(current_move.oldState, current_move.action, current_move.newState, next_move.action, current_move.reward);
         }
 
     }
