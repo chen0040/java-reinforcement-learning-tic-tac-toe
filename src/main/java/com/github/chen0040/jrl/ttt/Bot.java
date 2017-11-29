@@ -22,12 +22,8 @@ public class Bot {
 
     private double[] REWARD = new double[3];
 
-    public Bot(int color, Board board) {
-        stateCount = (int)Math.pow(3, board.size() * board.size());
-        actionCount = board.size() * board.size();
-
-        agent = new QLearner(stateCount, actionCount);
-        agent.setActionSelection(SoftMaxActionSelectionStrategy.class.getCanonicalName());
+    public Bot(int color, Board board, QLearner learner) {
+        this.agent = learner;
 
         this.color = color;
         this.board = board;
@@ -73,7 +69,7 @@ public class Bot {
             action = iv.getIndex();
             double value = iv.getValue();
 
-            if(value < 0){
+            if(value <= 0){
                 action = possibleActionList.get(random.nextInt(possibleActionList.size()));
             }
 
