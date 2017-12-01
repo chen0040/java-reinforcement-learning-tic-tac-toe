@@ -19,6 +19,8 @@ public static QLearner train(Board board, int episodes) {
 
     QBot bot1 = new QBot(1, board, learner);
     QBot bot2 =new QBot(2, board, learner);
+    
+    int wins = 0;
 
     for(int i=0; i < episodes; ++i) {
         bot1.clearHistory();
@@ -33,6 +35,42 @@ public static QLearner train(Board board, int episodes) {
         logger.info("winner: {}", board.getWinner());
         bot1.updateStrategy();
         bot2.updateStrategy();
+        logger.info("board: \n{}", board);
+        
+        wins += board.getWinner() == 1 ? 1 : 0;
+        logger.info("success rate: {} %", (wins * 100) / (i+1));
+    }
+
+    return learner;
+}
+```
+
+Alternaitvely, the following create one QBot that plays against a NaiveBot on the tic-tac-toe game to a train a Q-Learn model:
+
+```java
+public static QLearner train(Board board, int episodes) {
+
+    int stateCount = (int)Math.pow(3, board.size() * board.size());
+    int actionCount = board.size() * board.size();
+
+    QLearner learner = new QLearner(stateCount, actionCount);
+    //learner.setActionSelection(SoftMaxActionSelectionStrategy.class.getCanonicalName());
+
+    QBot bot1 = new SarsaBot(1, board, learner);
+    NaiveBot bot2 =new SarsaBot(2, board);
+
+    for(int i=0; i < episodes; ++i) {
+        bot1.clearHistory();
+        bot2.clearHistory();
+
+        logger.info("Iteration: {} / {}", (i+1), episodes);
+        board.reset();
+        while (board.canBePlayed()) {
+            bot1.act();
+            bot2.act();
+        }
+        logger.info("winner: {}", board.getWinner());
+        bot1.updateStrategy();
         logger.info("board: \n{}", board);
     }
 
@@ -80,6 +118,13 @@ double successRate = test(board, model, 1000);
 logger.info("Q-Learn Bot beats Random Bot in {} % of the games being played", successRate * 100);
 ```
 
+To save and load the Q-Learn model:
+
+```java
+String model_json = model.toJson();
+QLearner loaded_from_json = QLearner.fromJson(model_json);
+```
+
 This sample code can be found in the DojoQ.java file in the project.
 
 ### SARSA (State-Action-Reward-State-Action)
@@ -112,6 +157,44 @@ public static QLearner train(Board board, int episodes) {
         bot1.updateStrategy();
         bot2.updateStrategy();
         logger.info("board: \n{}", board);
+    }
+
+    return learner;
+}
+```
+
+Alternaitvely, the following create one SARSA bot that plays against a NaiveBot on the tic-tac-toe game to a train a SARSA model:
+
+```java
+public static QLearner train(Board board, int episodes) {
+
+    int stateCount = (int)Math.pow(3, board.size() * board.size());
+    int actionCount = board.size() * board.size();
+
+    SarsaLearner learner = new SarsaLearner(stateCount, actionCount);
+    //learner.setActionSelection(SoftMaxActionSelectionStrategy.class.getCanonicalName());
+
+    SarsaBot bot1 = new SarsaBot(1, board, learner);
+    NaiveBot bot2 =new SarsaBot(2, board);
+    
+    int wins = 0;
+
+    for(int i=0; i < episodes; ++i) {
+        bot1.clearHistory();
+        bot2.clearHistory();
+
+        logger.info("Iteration: {} / {}", (i+1), episodes);
+        board.reset();
+        while (board.canBePlayed()) {
+            bot1.act();
+            bot2.act();
+        }
+        logger.info("winner: {}", board.getWinner());
+        bot1.updateStrategy();
+        logger.info("board: \n{}", board);
+        
+        wins += board.getWinner() == 1 ? 1 : 0;
+        logger.info("success rate: {} %", (wins * 100) / (i+1));
     }
 
     return learner;
@@ -158,5 +241,14 @@ double successRate = test(board, model, 1000);
 logger.info("SARSA Bot beats Random Bot in {} % of the games being played", successRate * 100);
 ```
 
+To save and load the SARSA model:
+
+```java
+String model_json = model.toJson();
+SarsaLearner loaded_from_json = SarsaLearner.fromJson(model_json);
+```
+
 This sample code can be found in the DojoSarsa.java file in the project.
+
+
 
