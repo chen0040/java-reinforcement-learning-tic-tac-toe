@@ -2,9 +2,7 @@ package com.github.chen0040.jrl.ttt.dojos;
 
 import com.github.chen0040.jrl.ttt.Board;
 import com.github.chen0040.jrl.ttt.bots.NaiveBot;
-import com.github.chen0040.jrl.ttt.bots.QBot;
 import com.github.chen0040.jrl.ttt.bots.SarsaBot;
-import com.github.chen0040.rl.learning.qlearn.QLearner;
 import com.github.chen0040.rl.learning.sarsa.SarsaLearner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +38,7 @@ public class DojoSarsa {
 
     }
 
-    public static SarsaLearner train(Board board, int episodes) {
+    public static SarsaLearner trainAgainstSelf(Board board, int episodes) {
 
 
         int stateCount = (int)Math.pow(3, board.size() * board.size());
@@ -71,7 +69,7 @@ public class DojoSarsa {
         return learner;
     }
 
-    public static SarsaLearner train_2(Board board, int episodes) {
+    public static SarsaLearner trainAgainstNaiveBot(Board board, int episodes) {
 
 
         int stateCount = (int)Math.pow(3, board.size() * board.size());
@@ -109,7 +107,7 @@ public class DojoSarsa {
     public static void main(String[] args) {
 
         Board board = new Board();
-        SarsaLearner model = train_2(board, 30000);
+        SarsaLearner model = trainAgainstNaiveBot(board, 30000);
 
 
         double cap = test(board, model, 100);

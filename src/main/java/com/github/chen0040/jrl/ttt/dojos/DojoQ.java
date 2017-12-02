@@ -3,6 +3,7 @@ package com.github.chen0040.jrl.ttt.dojos;
 import com.github.chen0040.jrl.ttt.Board;
 import com.github.chen0040.jrl.ttt.bots.NaiveBot;
 import com.github.chen0040.jrl.ttt.bots.QBot;
+import com.github.chen0040.rl.actionselection.SoftMaxActionSelectionStrategy;
 import com.github.chen0040.rl.learning.qlearn.QLearner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ public class DojoQ {
 
     }
 
-    public static QLearner train(Board board, int episodes) {
+    public static QLearner trainAgainstSelf(Board board, int episodes) {
 
 
         int stateCount = (int)Math.pow(3, board.size() * board.size());
@@ -69,7 +70,7 @@ public class DojoQ {
         return learner;
     }
 
-    public static QLearner train_2(Board board, int episodes) {
+    public static QLearner trainAgainstNaiveBot(Board board, int episodes) {
 
 
         int stateCount = (int)Math.pow(3, board.size() * board.size());
@@ -107,7 +108,7 @@ public class DojoQ {
     public static void main(String[] args) {
 
         Board board = new Board();
-        QLearner model = train_2(board, 30000);
+        QLearner model = trainAgainstNaiveBot(board, 30000);
 
 
         double cap = test(board, model, 1000);

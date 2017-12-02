@@ -23,9 +23,9 @@ public class Position {
         return x * board.size() + y;
     }
 
-    public static Position fromInteger(Board board, int action) {
-        int x = (int)Math.floor((double)action / board.size());
-        int y = action - x * board.size();
+    public static Position fromInteger(Board board, int intValue) {
+        int x = (int)Math.floor((double)intValue / board.size());
+        int y = intValue - x * board.size();
         return new Position(x, y);
     }
 }

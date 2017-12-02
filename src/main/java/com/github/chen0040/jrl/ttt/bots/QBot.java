@@ -9,6 +9,7 @@ import com.github.chen0040.rl.utils.IndexValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class QBot extends Bot {
     private final QLearner agent;
@@ -36,6 +37,8 @@ public class QBot extends Bot {
             }
 
             Position pos = Position.fromInteger(board, action);
+
+
             board.move(pos, color);
         }
 
