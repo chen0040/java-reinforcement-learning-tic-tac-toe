@@ -17,7 +17,6 @@ public class DojoSarsa {
         NaiveBot bot2 =new NaiveBot(2, board);
 
         int wins = 0;
-        int loses = 0;
         for(int i=0; i < episodes; ++i) {
             bot1.clearHistory();
             bot2.clearHistory();
@@ -31,7 +30,6 @@ public class DojoSarsa {
             int winner = board.getWinner();
             logger.info("Winner: {}", winner);
             wins += winner == 1 ? 1 : 0;
-            loses += winner == 2 ? 1 : 0;
         }
 
         return wins * 1.0 / episodes;
@@ -95,7 +93,6 @@ public class DojoSarsa {
             }
             logger.info("winner: {}", board.getWinner());
             bot1.updateStrategy();
-            //bot2.updateStrategy();
             logger.info("board: \n{}", board);
             wins += board.getWinner() == 1 ? 1 : 0;
             logger.info("success rate: {} %", (wins * 100) / (i+1));
