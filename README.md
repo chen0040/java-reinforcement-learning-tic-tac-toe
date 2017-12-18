@@ -6,7 +6,13 @@ Demo of reinforcement learning using tic-tac-toe with the [java-reinforcement-le
 
 The gui version run reinforcement learning in the interactive mode. it is implemented in com.github.chen0040.jrl.ttt.gui.Application
 
-To run the gui version, 
+To run the gui version, git clone this project, run the make.ps1 or make.sh to build the reinforcement-learning-tic-tac-toe.jar into the bin folder.
+
+Run:
+
+```bash
+java -jar bin/reinforcement-learning-tic-tac-toe.jar
+```
 
 # Usage - Console
 
