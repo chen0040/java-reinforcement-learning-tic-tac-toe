@@ -22,6 +22,10 @@ public class Board {
         }
     }
 
+    public int[][] getBoard() {
+        return board;
+    }
+
     public int size() {
         return board.length;
     }

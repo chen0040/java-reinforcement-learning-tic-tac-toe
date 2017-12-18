@@ -2,9 +2,21 @@
 
 Demo of reinforcement learning using tic-tac-toe with the [java-reinforcement-learning](https://github.com/chen0040/java-reinforcement-learning) package.
 
-# Usage
+# Usage - GUI
 
-### Q-Learn
+The gui version run reinforcement learning in the interactive mode. it is implemented in com.github.chen0040.jrl.ttt.gui.Application
+
+To run the gui version, 
+
+# Usage - Console
+
+The console version runs the reinforcement learning against a naive bot, they are implemented in:
+
+* com.github.chen0040.jrl.ttt.dojos.DojoQ
+* com.github.chen0040.jrl.ttt.dojos.DojoSarsa
+* com.github.chen0040.jrl.ttt.dojos.DojoR
+
+### Q-Learn 
 
 The following create two Q-Learning bots that plays against each other on the tic-tac-toe game to a train a Q-Learn model:
 
